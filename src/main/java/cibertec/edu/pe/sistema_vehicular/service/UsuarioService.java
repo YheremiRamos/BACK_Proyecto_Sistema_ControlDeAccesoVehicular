@@ -13,5 +13,8 @@ public interface UsuarioService {
     public abstract List<Rol> traerRolesDeUsuario(int idUsuario);
 
     public abstract Usuario buscaPorLogin(String login);
+    
+    //Búsqueda por DNI
+    public abstract List<Usuario> buscaUsuarioPorDni(String dni);
 
 }

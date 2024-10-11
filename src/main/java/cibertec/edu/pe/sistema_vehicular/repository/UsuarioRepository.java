@@ -23,4 +23,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     public abstract Usuario findByLogin(String login);
 
+    //Búsqueda por DNI
+    @Query("select u from Usuario u where u.dni like ?1")
+	public abstract List<Usuario> traerUsuarioPorDni(String dni);
 }
