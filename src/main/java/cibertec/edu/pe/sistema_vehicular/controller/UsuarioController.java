@@ -2,6 +2,10 @@ package cibertec.edu.pe.sistema_vehicular.controller;
 
 import java.util.List;
 
+import cibertec.edu.pe.sistema_vehicular.entity.Cliente;
+import cibertec.edu.pe.sistema_vehicular.entity.TipoUsuario;
+import cibertec.edu.pe.sistema_vehicular.service.ClienteService;
+import cibertec.edu.pe.sistema_vehicular.service.TipoUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +26,12 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
+
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private TipoUsuarioService tipoUsuarioService;
 	
 	/*
 	 * @GetMapping
@@ -38,5 +48,21 @@ public class UsuarioController {
         List<Usuario> lstSalida = usuarioService.buscaUsuarioPorDni(dni);
         return ResponseEntity.ok(lstSalida);
     }
-	
+
+    @GetMapping("/buscarClientePorDni")
+    @ResponseBody
+    public ResponseEntity<?> consultaCliente(@RequestParam(name = "identificador", required = true, defaultValue = "") String identificador) {
+
+        List<Cliente> lstSalida = clienteService.listarClientes(identificador);
+        return ResponseEntity.ok(lstSalida);
+    }
+
+
+    @GetMapping("/listarTipoUsuario")
+	@ResponseBody
+    public List<TipoUsuario> listarTipoUsuario() {return tipoUsuarioService.listarTipoUsuario();}
+
+
+
+
 }
