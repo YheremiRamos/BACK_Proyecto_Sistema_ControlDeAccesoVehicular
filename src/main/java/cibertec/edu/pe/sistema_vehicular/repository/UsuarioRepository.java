@@ -21,6 +21,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query("Select r from Rol r, UsuarioHasRol u where r.idRol = u.rol.idRol and u.usuario.idUsuario = :var_idUsuario")
     public abstract List<Rol> traerRolesDeUsuario(@Param("var_idUsuario")int idUsuario);
 
+
     public abstract Usuario findByLogin(String login);
 
     //Búsqueda por DNI

@@ -1,7 +1,9 @@
 package cibertec.edu.pe.sistema_vehicular.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import cibertec.edu.pe.sistema_vehicular.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class EspacioParqueoServiceImpl implements EspacioParqueoService{
 
 	@Autowired
 	EspacioParqueoRepository espacioRepository;
-	
+
 	@Override
 	public List<EspacioParqueo> listarEspaciosParqueoTodos() {
 		return espacioRepository.findByOrderByIdParqueo();
@@ -22,6 +24,10 @@ public class EspacioParqueoServiceImpl implements EspacioParqueoService{
 	@Override
 	public List<EspacioParqueo> listarEspaciosIdParqueo(int idParqueo) {
 		return espacioRepository.findByIdParqueo(idParqueo);
+	}
+
+	public Optional<EspacioParqueo> findById(int id) {
+		return espacioRepository.findById(id);
 	}
 
 }

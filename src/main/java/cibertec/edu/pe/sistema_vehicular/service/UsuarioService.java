@@ -16,5 +16,6 @@ public interface UsuarioService {
     
     //Búsqueda por DNI
     public abstract List<Usuario> buscaUsuarioPorDni(String dni);
+    // Método para buscar usuario por nombre de usuario
 
 }
