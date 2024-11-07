@@ -33,8 +33,9 @@ public class EspacioParqueoServiceImpl implements EspacioParqueoService{
 	
 	@Override
 	public EspacioParqueo crearEspacioParqueo(EspacioParqueo espacioParqueo) {
+		espacioParqueo.setEstado("Disponible"); 
 		espacioParqueo.setFechaCreacion(new Date());
-		espacioParqueo.setFechaActualizacion(new Date());   // Asigna la fecha de actualización actual
+		espacioParqueo.setFechaActualizacion(new Date());  // Asigna la fecha de actualización actual
 		return espacioRepository.save(espacioParqueo);
 	}
 
