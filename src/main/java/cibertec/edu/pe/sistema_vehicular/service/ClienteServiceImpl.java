@@ -13,24 +13,28 @@ import java.util.Optional;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
-
-    @Autowired
-    private ClienteRepository repository;
     @Autowired
     private ClienteRepository clienteRepository;
 
     @Override
     public List<Cliente> listarClientes(String identificador) {
-        return repository.listarClientes();
+        return clienteRepository.listarClientes();
     }
 
     public Optional<Cliente> findById(int id) {
         return clienteRepository.findById(id);
     }
 
-    public Cliente save(Cliente cliente) {
-        return clienteRepository.save(cliente);  // Guardamos el cliente en la base de datos
+
+    public Optional<Cliente> findByDni(String dni) {
+        return clienteRepository.findByDni(dni);
     }
+
+    public Cliente save(Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
+
 
 
 }

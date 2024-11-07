@@ -1,6 +1,4 @@
 package cibertec.edu.pe.sistema_vehicular.service;
-
-import cibertec.edu.pe.sistema_vehicular.entity.EspacioParqueo;
 import cibertec.edu.pe.sistema_vehicular.entity.Parqueo;
 import cibertec.edu.pe.sistema_vehicular.repository.ParqueoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,4 +15,9 @@ public class ParqueoServiceImpl implements  ParqueoService{
     public Optional<Parqueo> findById(int id) {
         return parqueoRepository.findById(id);
     }
+
+    public Optional<Parqueo> findByTipoVechiculoPermitido(String tipoVehiculoPermitido) {
+        return parqueoRepository.findByTipoVehiculoPermitido(tipoVehiculoPermitido);
+    }
+
 }
