@@ -8,4 +8,5 @@ public interface EspacioParqueoService {
 
 	List<EspacioParqueo> listarEspaciosParqueoTodos();
 	List<EspacioParqueo> listarEspaciosIdParqueo(int idParq);
+	EspacioParqueo crearEspacioParqueo (EspacioParqueo espacioParqueo);
 }
