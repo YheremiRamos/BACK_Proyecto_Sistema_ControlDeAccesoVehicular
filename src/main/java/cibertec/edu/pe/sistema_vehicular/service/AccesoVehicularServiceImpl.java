@@ -16,5 +16,4 @@ public class AccesoVehicularServiceImpl implements  AccesoVehicularService{
         return repository.save(obj);
     }
 
-
 }
