@@ -15,7 +15,7 @@ public class Parqueo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idParqueo;
 	
-    private String ubicacion;
+    private String ubicacion;//cbo //Agregar tabla
     private int cantEspaciosGenerales;
     private int cantEspaciosDiscapacitados;
     private int capacidadTotal;

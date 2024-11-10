@@ -1,9 +1,9 @@
 package cibertec.edu.pe.sistema_vehicular.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import cibertec.edu.pe.sistema_vehicular.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +29,15 @@ public class EspacioParqueoServiceImpl implements EspacioParqueoService {
 	public Optional<EspacioParqueo> findById(int id) {
 		return espacioRepository.findById(id);
 	}
+
+	
+	public EspacioParqueo crearEspacioParqueo(EspacioParqueo espacioParqueo) {
+		espacioParqueo.setEstado("Disponible"); 
+		espacioParqueo.setFechaCreacion(new Date());
+		espacioParqueo.setFechaActualizacion(new Date());  // Asigna la fecha de actualización actual
+		return espacioRepository.save(espacioParqueo);
+	}
+
 
     public Optional<EspacioParqueo> findByNumeroEspacio(Integer numeroEspacio) {
 		return espacioRepository.findByNumeroEspacio(numeroEspacio);

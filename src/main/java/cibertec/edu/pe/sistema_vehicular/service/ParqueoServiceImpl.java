@@ -15,6 +15,8 @@ public class ParqueoServiceImpl implements  ParqueoService{
     public Optional<Parqueo> findById(int id) {
         return parqueoRepository.findById(id);
     }
+    
+    
 
     public Optional<Parqueo> findByTipoVechiculoPermitido(String tipoVehiculoPermitido) {
         return parqueoRepository.findByTipoVehiculoPermitido(tipoVehiculoPermitido);
