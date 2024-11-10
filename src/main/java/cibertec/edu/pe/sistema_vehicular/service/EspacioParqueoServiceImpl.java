@@ -11,7 +11,7 @@ import cibertec.edu.pe.sistema_vehicular.entity.EspacioParqueo;
 import cibertec.edu.pe.sistema_vehicular.repository.EspacioParqueoRepository;
 
 @Service
-public class EspacioParqueoServiceImpl implements EspacioParqueoService{
+public class EspacioParqueoServiceImpl implements EspacioParqueoService {
 
 	@Autowired
 	EspacioParqueoRepository espacioRepository;
@@ -31,7 +31,6 @@ public class EspacioParqueoServiceImpl implements EspacioParqueoService{
 	}
 
 	
-	@Override
 	public EspacioParqueo crearEspacioParqueo(EspacioParqueo espacioParqueo) {
 		espacioParqueo.setEstado("Disponible"); 
 		espacioParqueo.setFechaCreacion(new Date());
@@ -39,4 +38,8 @@ public class EspacioParqueoServiceImpl implements EspacioParqueoService{
 		return espacioRepository.save(espacioParqueo);
 	}
 
+
+    public Optional<EspacioParqueo> findByNumeroEspacio(Integer numeroEspacio) {
+		return espacioRepository.findByNumeroEspacio(numeroEspacio);
+    }
 }
