@@ -3,17 +3,13 @@ package cibertec.edu.pe.sistema_vehicular.controller;
 import java.util.List;
 
 import cibertec.edu.pe.sistema_vehicular.entity.Cliente;
+import cibertec.edu.pe.sistema_vehicular.entity.EspacioParqueo;
 import cibertec.edu.pe.sistema_vehicular.entity.TipoUsuario;
 import cibertec.edu.pe.sistema_vehicular.service.ClienteService;
 import cibertec.edu.pe.sistema_vehicular.service.TipoUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cibertec.edu.pe.sistema_vehicular.entity.Usuario;
 import cibertec.edu.pe.sistema_vehicular.service.UsuarioService;
@@ -53,10 +49,9 @@ public class UsuarioController {
     @ResponseBody
     public ResponseEntity<?> consultaCliente(@RequestParam(name = "identificador", required = true, defaultValue = "") String identificador) {
 
-        List<Cliente> lstSalida = clienteService.listarClientes(identificador);
+        List<Cliente> lstSalida = clienteService.buscaClientePorDni(identificador);
         return ResponseEntity.ok(lstSalida);
     }
-
 
     @GetMapping("/listarTipoUsuario")
 	@ResponseBody

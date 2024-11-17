@@ -52,6 +52,7 @@ public class AccesoVehicularController {
         try {
             // Asignar valores por defecto
             obj.setEstado(AppSettings.ACTIVO_DESC);
+            obj.getEspacio().setEstado(AppSettings.INACTIVO_DESCRIPCION);
             obj.setFechaRegistro(new Date());
             obj.setFechaActualizacion(new Date());
 
@@ -108,8 +109,6 @@ public class AccesoVehicularController {
     }
 
 
-
-
     @GetMapping("/cliente/id/{dni}")
     @ResponseBody
     public ResponseEntity<?> obtenerIdCliente(@PathVariable String dni) {
@@ -148,6 +147,16 @@ public class AccesoVehicularController {
             return ResponseEntity.badRequest().body(salida);
         }
     }
+
+
+
+    @GetMapping("/listarSalidaVehicular")
+    @ResponseBody
+    public ResponseEntity<List<Object[]>> listarSalidaVehicular() {
+        List<Object[]> lista = accesoVehicularService.listarSalidaVehicular();
+        return ResponseEntity.ok(lista);
+    }
+
 
 
 

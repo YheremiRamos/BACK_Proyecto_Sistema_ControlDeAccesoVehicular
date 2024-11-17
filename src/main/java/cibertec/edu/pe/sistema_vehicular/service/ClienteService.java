@@ -10,5 +10,9 @@ public interface ClienteService {
 
     public abstract List<Cliente> listarClientes(String identificador);
 
+    //Búsqueda por Identificador
+    public abstract List<Cliente> buscaClientePorDni(String dni);
+
+
 
 }
