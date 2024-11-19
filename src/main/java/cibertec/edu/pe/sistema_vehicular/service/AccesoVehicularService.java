@@ -10,5 +10,8 @@ public interface AccesoVehicularService {
 
     public abstract List<Object[]> listarSalidaVehicular();
 
+    public abstract void registrarIncidencia(Integer idCliente);
+
+    public abstract void registrarSalida(Integer idAccesoVehicular);
 
 }
