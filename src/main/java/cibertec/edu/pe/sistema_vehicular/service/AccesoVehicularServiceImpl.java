@@ -23,4 +23,14 @@ public class AccesoVehicularServiceImpl implements  AccesoVehicularService{
         return repository.listarAccesoVehicularConDetalles();
     }
 
+    @Override
+    public void registrarIncidencia(Integer idCliente) {
+        repository.ejecutarRegistrarIncidencia(idCliente);
+    }
+
+    @Override
+    public void registrarSalida(Integer idAccesoVehicular) {
+        repository.ejecutarRegistrarSalida(idAccesoVehicular);
+    }
+
 }

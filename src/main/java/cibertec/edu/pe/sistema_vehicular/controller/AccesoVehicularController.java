@@ -6,6 +6,7 @@ import cibertec.edu.pe.sistema_vehicular.service.*;
 import cibertec.edu.pe.sistema_vehicular.util.AppSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -108,6 +109,29 @@ public class AccesoVehicularController {
         return ResponseEntity.ok(salida);
     }
 
+    @PostMapping("/registrarIncidencia/{idCliente}")
+    @ResponseBody
+    public ResponseEntity<String> registrarIncidencia(@PathVariable Integer idCliente) {
+
+        try {
+            accesoVehicularService.registrarIncidencia(idCliente);
+            return ResponseEntity.ok("Incidencia registrada correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al registrar incidencia: " + e.getMessage());
+        }
+    }
+
+
+    @PostMapping("/registrarSalida/{idAccesoVehicular}")
+    @ResponseBody
+    public ResponseEntity<?> registraSalida(@PathVariable Integer idAccesoVehicular ){
+        try {
+            accesoVehicularService.registrarSalida(idAccesoVehicular);
+            return ResponseEntity.ok("Salida registrada correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al registrar Salida: " + e.getMessage());
+        }
+    }
 
     @GetMapping("/cliente/id/{dni}")
     @ResponseBody
@@ -147,8 +171,6 @@ public class AccesoVehicularController {
             return ResponseEntity.badRequest().body(salida);
         }
     }
-
-
 
     @GetMapping("/listarSalidaVehicular")
     @ResponseBody
