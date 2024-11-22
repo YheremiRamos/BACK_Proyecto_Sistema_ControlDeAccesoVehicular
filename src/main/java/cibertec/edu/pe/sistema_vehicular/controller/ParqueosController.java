@@ -31,13 +31,13 @@ public class ParqueosController {
     }
 
     // Obtener parqueo por ID
-    @GetMapping("/{idParqueo}")
-    public ResponseEntity<Parqueos> buscarPorId(@PathVariable("idParqueo") int idParqueo) {
-        Parqueos parqueo = parqueosService.buscarPorId(idParqueo);
-        if (parqueo == null) {
+    @GetMapping("/{idParqueos}")
+    public ResponseEntity<Parqueos> buscarPorId(@PathVariable("idParqueos") int idParqueos) {
+        Parqueos parqueos = parqueosService.buscarPorId(idParqueos);
+        if (parqueos == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(parqueo);
+        return ResponseEntity.ok(parqueos);
     }
 
     // Registrar nuevo parqueo
@@ -56,7 +56,7 @@ public class ParqueosController {
     }
 
     // Actualizar parqueo existente
-    @PutMapping("/actualizaParqueo/{idParqueo}")
+    @PutMapping("/actualizaParqueo/{idParqueos}")
     public ResponseEntity<Map<String, Object>> actualizarParqueo(@RequestBody Parqueos parqueo) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -71,11 +71,11 @@ public class ParqueosController {
     }
 
     // Eliminar parqueo por ID
-    @DeleteMapping("/eliminaParqueo/{idParqueo}") 
-    public ResponseEntity<Map<String, Object>> eliminarParqueo(@PathVariable("idParqueo") int idParqueo) {
+    @DeleteMapping("/eliminaParqueo/{idParqueos}")
+    public ResponseEntity<Map<String, Object>> eliminarParqueo(@PathVariable("idParqueos") int idParqueos) {
         Map<String, Object> response = new HashMap<>();
         try {
-            parqueosService.eliminarParqueo(idParqueo);
+            parqueosService.eliminarParqueo(idParqueos);
             response.put("mensaje", "Parqueo eliminado exitosamente");
         } catch (Exception e) {
             response.put("mensaje", "Error al eliminar parqueo");
@@ -119,7 +119,7 @@ public class ParqueosController {
                 List<Map<String, Object>> parqueos = entry.getValue().stream()
                     .map(p -> {
                         Map<String, Object> parqueo = new HashMap<>();
-                        parqueo.put("Id", p.getIdParqueo()); // Cambié 'id' a 'Id' (para que sea mayúscula)
+                        parqueo.put("Id", p.getIdParqueos()); // Cambié 'id' a 'Id' (para que sea mayúscula)
                         return parqueo;
                     })
                     .collect(Collectors.toList());

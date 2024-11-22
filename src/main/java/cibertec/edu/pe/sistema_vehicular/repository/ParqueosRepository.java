@@ -10,10 +10,10 @@ import cibertec.edu.pe.sistema_vehicular.entity.Parqueos;
 public interface ParqueosRepository extends JpaRepository<Parqueos, Integer> {
 
     // Listar todos los parqueos ordenados por ID
-    List<Parqueos> findByOrderByIdParqueo();
+    List<Parqueos> findByOrderByIdParqueos();
 
     // Buscar por ID de parqueo
-    List<Parqueos> findByIdParqueo(int idParqueo);
+    List<Parqueos> findByIdParqueos(int idParqueos);
 
     // Buscar parqueos por estado (Ej: Activo, Disponible)
     @Query("SELECT p FROM Parqueos p WHERE p.estadoEspacios.idEstadoEspacios = :idEstadoEspacios")

@@ -15,12 +15,12 @@ public class ParqueosServiceImpl implements ParqueosService{
 	 
 	@Override
 	public List<Parqueos> listarTodos() {
-		  return repository.findByOrderByIdParqueo();
+		  return repository.findByOrderByIdParqueos();
 	}
 
 	@Override
-	public Parqueos buscarPorId(int idParqueo) {
-		return repository.findById(idParqueo).orElse(null);
+	public Parqueos buscarPorId(int idParqueos) {
+		return repository.findById(idParqueos).orElse(null);
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class ParqueosServiceImpl implements ParqueosService{
 	}
 
 	@Override
-	public void eliminarParqueo(int idParqueo) {
-		 repository.deleteById(idParqueo);
+	public void eliminarParqueo(int idParqueos) {
+		 repository.deleteById(idParqueos);
 	}
 
 	@Override

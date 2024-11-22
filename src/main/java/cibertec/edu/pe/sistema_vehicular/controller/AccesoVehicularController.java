@@ -125,6 +125,7 @@ public class AccesoVehicularController {
     @PostMapping("/registrarSalida/{idAccesoVehicular}")
     @ResponseBody
     public ResponseEntity<?> registraSalida(@PathVariable Integer idAccesoVehicular ){
+
         try {
             accesoVehicularService.registrarSalida(idAccesoVehicular);
             return ResponseEntity.ok("Salida registrada correctamente.");

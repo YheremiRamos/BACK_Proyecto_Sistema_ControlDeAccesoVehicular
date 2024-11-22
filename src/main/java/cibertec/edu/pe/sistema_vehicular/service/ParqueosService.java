@@ -10,7 +10,7 @@ public interface ParqueosService {
     List<Parqueos> listarTodos();
 
     // Buscar parqueo por ID
-    Parqueos buscarPorId(int idParqueo);
+    Parqueos buscarPorId(int idParqueos);
 
     // Registrar un nuevo parqueo
     Parqueos registrarParqueo(Parqueos parqueos);
@@ -19,7 +19,7 @@ public interface ParqueosService {
     Parqueos actualizarParqueo(Parqueos parqueos);
 
     // Eliminar un parqueo por ID
-    void eliminarParqueo(int idParqueo);
+    void eliminarParqueo(int idParqueos);
 
     // Listar parqueos por estado
     List<Parqueos> listarPorEstado(String estado_espacios);
