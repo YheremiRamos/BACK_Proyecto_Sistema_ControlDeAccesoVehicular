@@ -98,7 +98,8 @@ public class ParqueosController {
         return ResponseEntity.ok(parqueos);
     }
     
-    /*--------------------LISTADO Y AGRUPACION DE PARQUEOS EN UBICACIONES------------------*/
+    /* SOLO PARA REVISAR EN INSOMNIA,
+     * NO SE CONECTA AL FRONT--------------------LISTADO Y AGRUPACION DE PARQUEOS EN UBICACIONES------------------*/
  // Obtener parqueos agrupados por ubicación
     @GetMapping("/agrupadosPorUbicacion")
     public ResponseEntity<List<Map<String, Object>>> listarAgrupadosPorUbicacion() {
@@ -113,13 +114,13 @@ public class ParqueosController {
         List<Map<String, Object>> resultado = parqueosAgrupadosPorUbicacion.entrySet().stream()
             .map(entry -> {
                 Map<String, Object> agrupado = new HashMap<>();
-                agrupado.put("UbicacionId", entry.getKey()); // Cambié 'ubicacionId' a 'UbicacionId'
+                agrupado.put("UbicacionId", entry.getKey()); // 
 
                 // Transformar los parqueos para incluir solo id
                 List<Map<String, Object>> parqueos = entry.getValue().stream()
                     .map(p -> {
                         Map<String, Object> parqueo = new HashMap<>();
-                        parqueo.put("Id", p.getIdParqueo()); // Cambié 'id' a 'Id' (para que sea mayúscula)
+                        parqueo.put("Id", p.getIdParqueo()); 
                         return parqueo;
                     })
                     .collect(Collectors.toList());
