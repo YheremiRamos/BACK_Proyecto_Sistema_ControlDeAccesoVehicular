@@ -22,6 +22,14 @@ public interface UbicacionService {
 
     /* Listar ubicaciones por tipo de ubicación
     List<Ubicacion> listarPorTipoUbicacion(int idTipoUbicacion);*/
+    
+    /*------------VALIDAICONES DE REPITICION DE NOMBRE----------------*/
+    
+    //reg
+    List<Ubicacion> listaPorNombreIgualRegistra(String nombreUbicacion);
+    
+    //act
+    List<Ubicacion> listaPorNombreIgualActualiza(String nombreUbicacion, int idUbicacion);
 
     
 }

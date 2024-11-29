@@ -31,16 +31,16 @@ public class ParqueosController {
     }
 
     // Obtener parqueo por ID
-    @GetMapping("/{idParqueo}")
-    public ResponseEntity<Parqueos> buscarPorId(@PathVariable("idParqueo") int idParqueo) {
-        Parqueos parqueo = parqueosService.buscarPorId(idParqueo);
+    @GetMapping("/{idParqueos}")
+    public ResponseEntity<Parqueos> buscarPorId(@PathVariable("idParqueos") int idParqueos) {
+        Parqueos parqueo = parqueosService.buscarPorId(idParqueos);
         if (parqueo == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(parqueo);
     }
 
-    // Registrar nuevo parqueo
+ // Registrar nuevo parqueo
     @PostMapping("/registraParqueo")
     public ResponseEntity<Map<String, Object>> registrarParqueo(@RequestBody Parqueos parqueo) {
         Map<String, Object> response = new HashMap<>();
@@ -49,14 +49,14 @@ public class ParqueosController {
             response.put("mensaje", "Parqueo registrado exitosamente");
             response.put("parqueo", parqueoGuardado);
         } catch (Exception e) {
-            response.put("mensaje", "Error al registrar parqueo");
+            response.put("error", "Error al registrar parqueo");
             e.printStackTrace();
         }
         return ResponseEntity.ok(response);
     }
 
     // Actualizar parqueo existente
-    @PutMapping("/actualizaParqueo/{idParqueo}")
+    @PutMapping("/actualizaParqueo/{idParqueos}")
     public ResponseEntity<Map<String, Object>> actualizarParqueo(@RequestBody Parqueos parqueo) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -64,21 +64,25 @@ public class ParqueosController {
             response.put("mensaje", "Parqueo actualizado exitosamente");
             response.put("parqueo", parqueoActualizado);
         } catch (Exception e) {
-            response.put("mensaje", "Error al actualizar parqueo");
+            response.put("error", "Error al actualizar parqueo");
             e.printStackTrace();
         }
         return ResponseEntity.ok(response);
     }
+    
+    
+  
+
 
     // Eliminar parqueo por ID
-    @DeleteMapping("/eliminaParqueo/{idParqueo}") 
-    public ResponseEntity<Map<String, Object>> eliminarParqueo(@PathVariable("idParqueo") int idParqueo) {
+    @DeleteMapping("/eliminaParqueo/{idParqueos}") 
+    public ResponseEntity<Map<String, Object>> eliminarParqueo(@PathVariable("idParqueos") int idParqueos) {
         Map<String, Object> response = new HashMap<>();
         try {
-            parqueosService.eliminarParqueo(idParqueo);
+            parqueosService.eliminarParqueo(idParqueos);
             response.put("mensaje", "Parqueo eliminado exitosamente");
         } catch (Exception e) {
-            response.put("mensaje", "Error al eliminar parqueo");
+            response.put("error", "Error al eliminar parqueo");
             e.printStackTrace();
         }
         return ResponseEntity.ok(response);
@@ -114,13 +118,13 @@ public class ParqueosController {
         List<Map<String, Object>> resultado = parqueosAgrupadosPorUbicacion.entrySet().stream()
             .map(entry -> {
                 Map<String, Object> agrupado = new HashMap<>();
-                agrupado.put("UbicacionId", entry.getKey()); // 
+                agrupado.put("idUbicacion", entry.getKey()); // 
 
                 // Transformar los parqueos para incluir solo id
                 List<Map<String, Object>> parqueos = entry.getValue().stream()
                     .map(p -> {
                         Map<String, Object> parqueo = new HashMap<>();
-                        parqueo.put("Id", p.getIdParqueo()); 
+                        parqueo.put("Id", p.getIdParqueos()); 
                         return parqueo;
                     })
                     .collect(Collectors.toList());
@@ -133,6 +137,16 @@ public class ParqueosController {
         // Retornar la respuesta agrupada
         return ResponseEntity.ok(resultado);
     }
+
+    //-----------------------CONSULTA COMPLEJA
+    @GetMapping("/consultaParqueosPorParametros") //http://localhost:8090/url/parqueos/consultaParqueosPorParametros?tipoVehiculo=2&estadoEspacio=3&tipoParqueo=1
+    public List<Parqueos> consultaParqueosPorParametros(
+            @RequestParam(name = "tipoVehiculo", defaultValue = "-1") int tipoVehiculo,
+            @RequestParam(name = "estadoEspacio", defaultValue = "-1") int estadoEspacio,
+            @RequestParam(name = "tipoParqueo", defaultValue = "-1") int tipoParqueo) {
+        return parqueosService.listaCompleja(tipoVehiculo, estadoEspacio, tipoParqueo);
+    }
+
 
 
 

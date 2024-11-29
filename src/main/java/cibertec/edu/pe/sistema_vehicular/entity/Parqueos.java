@@ -12,7 +12,7 @@ public class Parqueos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idParqueo;
+    private int idParqueos;
     
     @ManyToOne
     @JoinColumn(name = "idUbicacion", nullable = false)

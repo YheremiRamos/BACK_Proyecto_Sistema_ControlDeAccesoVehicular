@@ -17,7 +17,20 @@ public interface UbicacionRepository extends JpaRepository<Ubicacion, Integer> {
     // Buscar ubicaciones por nombre
     List<Ubicacion> findByNombreUbicacionContaining(String nombreUbicacion);
 
-    /* Filtrar ubicaciones por tipo de ubicación (buscando por la entidad)
+   
+
+    /*--------------------SEM 12 - VALIDACIONES DE REGISTRO Y ACTUZALIZACION------------------*/
+  //BUSCA UBICAICONES CON NOMBRES IGUALES (PARA VALIDACION)
+  	@Query("select u from Ubicacion u where u.nombreUbicacion = ?1")
+  	List<Ubicacion> listaPorNombreIgualRegistra(String nombreUbicacion);
+  	
+  //actualizar //validacion de repetción 
+  	@Query("select u from Ubicacion u where u.nombreUbicacion = ?1 and u.idUbicacion != ?2") 
+  	List<Ubicacion> listaPorNombreIgualActualiza(String nombreUbicacion, int idUbicacion);
+  	
+  	
+  	 /*--------------------VALIDACIONES/FILTRACIONES OPCIONALES------------------*/
+  	 /* Filtrar ubicaciones por tipo de ubicación (buscando por la entidad)
     @Query("SELECT u FROM Ubicacion u WHERE u.tipoUbicacion.idUbicacion = :idTipoUbicacion")
     List<Ubicacion> findByTipoUbicacionId(@Param("idTipoUbicacion") Integer idTipoUbicacion);*/
 
@@ -28,8 +41,4 @@ public interface UbicacionRepository extends JpaRepository<Ubicacion, Integer> {
     // Contar ubicaciones por tipo de ubicación (comentado temporalmente)
     /*@Query("SELECT COUNT(u) FROM Ubicacion u WHERE u.tipoUbicacion.idTipoUbicacion = :tipoId")
     long countByTipoUbicacion(@Param("tipoId") Integer tipoId);*/
-
-    // Filtrar ubicaciones por límite de parqueos (comentado temporalmente)
-    /*@Query("SELECT u FROM Ubicacion u WHERE u.limiteParqueos = :limite")
-    List<Ubicacion> findByLimiteParqueos(@Param("limite") Integer limite);*/
 }

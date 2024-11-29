@@ -38,6 +38,16 @@ public class UbicacionServiceImpl implements UbicacionService {
 		 ubicacionRepository.deleteById(idUbicacion);
 		
 	}
+	 /*--------------------SEM 12 - VALIDACIONES DE REGISTRO Y ACTUZALIZACION------------------*/
+	@Override
+	public List<Ubicacion> listaPorNombreIgualRegistra(String nombreUbicacion) {
+		return ubicacionRepository.listaPorNombreIgualRegistra(nombreUbicacion);
+	}
+
+	@Override
+	public List<Ubicacion> listaPorNombreIgualActualiza(String nombreUbicacion, int idUbicacion) {
+		return ubicacionRepository.listaPorNombreIgualActualiza(nombreUbicacion, idUbicacion);
+	}
 
 	/*@Override
 	public List<Ubicacion> listarPorTipoUbicacion(int idTipoUbicacion) {

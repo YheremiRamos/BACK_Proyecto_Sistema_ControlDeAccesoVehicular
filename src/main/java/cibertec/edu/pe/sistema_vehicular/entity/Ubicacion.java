@@ -25,4 +25,8 @@ public class Ubicacion {
     
     @Column(name = "limiteParqueos", nullable = false)
     private int limiteParqueos; // Máximo número de parqueos en esta ubicación
+    
+  
 }
+
+

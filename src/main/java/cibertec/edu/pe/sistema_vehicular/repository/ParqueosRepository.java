@@ -10,10 +10,10 @@ import cibertec.edu.pe.sistema_vehicular.entity.Parqueos;
 public interface ParqueosRepository extends JpaRepository<Parqueos, Integer> {
 
     // Listar todos los parqueos ordenados por ID
-    List<Parqueos> findByOrderByIdParqueo();
+    List<Parqueos> findByOrderByIdParqueos();
 
     // Buscar por ID de parqueo
-    List<Parqueos> findByIdParqueo(int idParqueo);
+    List<Parqueos> findByIdParqueos(int idParqueos);
 
     // Buscar parqueos por estado (Ej: Activo, Disponible)
     @Query("SELECT p FROM Parqueos p WHERE p.estadoEspacios.idEstadoEspacios = :idEstadoEspacios")
@@ -35,8 +35,15 @@ public interface ParqueosRepository extends JpaRepository<Parqueos, Integer> {
     @Query("SELECT p FROM Parqueos p WHERE p.ubicacion.idUbicacion = :ubicacionId AND p.estado.idEstadoEspacios = :estadoId")
     List<Parqueos> findByUbicacionYEstado(@Param("ubicacionId") Integer ubicacionId, @Param("estadoId") Integer estadoId);*/
 
-/*--------------------LISTADO Y AGRUPACION DE PARQUEOS EN UBICACIONES------------------*/
-   
+/*--------------------SEM 12 - FILTRACION COMPLETA-----------------*/
+    @Query("SELECT p FROM Parqueos p WHERE"
+    	    + " (?1 = -1 OR p.tipoVehiculo.idTipoVehiculo = ?1) AND"
+    	    + " (?2 = -1 OR p.estadoEspacios.idEstadoEspacios = ?2) AND"
+    	    + " (?3 = -1 OR p.tipoParqueo.idTipoParqueo = ?3)")
+    	List<Parqueos> listaConsultaCompleja(int idTipoVehiculo, int idEstadoEspacio, int idTipoParqueo);
+
+
+
 
 
 }

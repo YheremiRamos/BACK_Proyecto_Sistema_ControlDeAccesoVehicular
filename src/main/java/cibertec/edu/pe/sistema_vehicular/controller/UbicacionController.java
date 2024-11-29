@@ -3,6 +3,7 @@ package cibertec.edu.pe.sistema_vehicular.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,18 @@ public class UbicacionController {
     @PostMapping("/registraUbicacion")
     public ResponseEntity<Map<String, Object>> registrarUbicacion(@RequestBody Ubicacion ubicacion) {
         Map<String, Object> response = new HashMap<>();
+        
+        
+       
+       
         try {
+        	 //VALIDACION
+        	 List<Ubicacion> lstUbicacions = ubicacionService.listaPorNombreIgualRegistra(ubicacion.getNombreUbicacion());
+        	 if (!lstUbicacions.isEmpty()) {
+        		 response.put("mensaje", "La ubicación '" + ubicacion.getNombreUbicacion() + "' ya existe");
+                 return ResponseEntity.ok(response);
+			}
+        	 //
             Ubicacion ubicacionGuardada = ubicacionService.registrarUbicacion(ubicacion);
             response.put("mensaje", "Ubicación registrada exitosamente");
             response.put("ubicacion", ubicacionGuardada);
@@ -49,23 +61,44 @@ public class UbicacionController {
             response.put("mensaje", "Error al registrar ubicación");
             e.printStackTrace();
         }
+        
         return ResponseEntity.ok(response);
     }
 
-    // Actualizar ubicación existente
+ // Actualizar ubicación existente
     @PutMapping("/actualizaUbicacion/{idUbicacion}")
-    public ResponseEntity<Map<String, Object>> actualizarUbicacion(@RequestBody Ubicacion ubicacion) {
+    public ResponseEntity<Map<String, Object>> actualizarUbicacion(@PathVariable("idUbicacion") int idUbicacion, 
+                                                                   @RequestBody Ubicacion ubicacion) {
         Map<String, Object> response = new HashMap<>();
         try {
+        	 List<Ubicacion> lstUbicacions = ubicacionService.listaPorNombreIgualRegistra(ubicacion.getNombreUbicacion());
+        	 // Buscar la ubicación existente
+             Optional<Ubicacion> ubicacionExistente = Optional.ofNullable(ubicacionService.buscarPorId(idUbicacion));
+        	 if (!lstUbicacions.isEmpty()) {
+        		 response.put("error", "La ubicación '" + ubicacion.getNombreUbicacion() + "' ya existe");
+                 return ResponseEntity.ok(response);
+			}
+           
+
+        	 else if (!ubicacionExistente.isPresent()) {
+                response.put("error", "La ubicación con ID " + idUbicacion + " no existe");
+                return ResponseEntity.ok(response);
+            }
+
+            // Asignar el ID al objeto recibido
+            ubicacion.setIdUbicacion(idUbicacion);
+
+            // Actualizar ubicación
             Ubicacion ubicacionActualizada = ubicacionService.actualizarUbicacion(ubicacion);
             response.put("mensaje", "Ubicación actualizada exitosamente");
             response.put("ubicacion", ubicacionActualizada);
         } catch (Exception e) {
-            response.put("mensaje", "Error al actualizar ubicación");
+            response.put("error", "Error al actualizar ubicación");
             e.printStackTrace();
         }
         return ResponseEntity.ok(response);
     }
+
 
     // Eliminar ubicación por ID
     @DeleteMapping("/eliminaUbicacion/{idUbicacion}")
@@ -80,6 +113,10 @@ public class UbicacionController {
         }
         return ResponseEntity.ok(response);
     }
+    
+   
+    
+    /*--------------------SEM 12 - VALIDACION/FILTRACIONES EXTRA------------------*/
 
     /* Listar ubicaciones por tipo
     @GetMapping("/tipo/{idTipoUbicacion}")
