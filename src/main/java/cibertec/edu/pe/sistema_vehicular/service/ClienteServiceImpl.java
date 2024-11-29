@@ -44,5 +44,14 @@ public class ClienteServiceImpl implements ClienteService {
 
 	}
 
+	@Override
+	public List<Cliente> listaCompleja(String nombres, String apellidos, String identificador) {
+	
+	return	clienteRepository.listaConsultaCompleja(nombres, apellidos, identificador);
+	}
+	
+	
+
+
 
 }
