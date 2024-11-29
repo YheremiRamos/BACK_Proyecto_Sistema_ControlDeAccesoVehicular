@@ -28,14 +28,14 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteRepository.findByDni(dni);
     }
 
+    public Cliente save(Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
+
     @Override
     public List<Cliente> buscaClientePorDni(String identificador) {
         return clienteRepository.traerClientePorDni(identificador);
-    }
-
-    @Override
-    public Cliente registraCliente(Cliente obj) {
-        return clienteRepository.save(obj);
     }
 
 
