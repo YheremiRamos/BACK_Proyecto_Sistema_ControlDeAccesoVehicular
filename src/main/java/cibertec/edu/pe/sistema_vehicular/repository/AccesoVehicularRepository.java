@@ -29,6 +29,10 @@ public interface AccesoVehicularRepository extends JpaRepository<Acceso_Vehicula
     List<Object[]> listarAccesoVehicularConDetalles();
 
 
+    @Query(value = "SELECT MAX(a.idAccesoVehicular) FROM Acceso_Vehicular a", nativeQuery = true)
+    Integer findMaxId();
+
+
     //EJECUTAR STORE PROCEDURE
     @Transactional
     @Modifying

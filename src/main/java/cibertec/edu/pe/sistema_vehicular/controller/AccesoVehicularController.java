@@ -51,11 +51,18 @@ public class AccesoVehicularController {
         HashMap<String, Object> salida = new HashMap<>();
 
         try {
+
+
             // Asignar valores por defecto
             obj.setEstado(AppSettings.ACTIVO_DESC);
             obj.getEspacio().setEstado(AppSettings.INACTIVO_DESCRIPCION);
             obj.setFechaRegistro(new Date());
-            obj.setFechaActualizacion(new Date());
+
+            // Obtener el último ID
+            Integer ultimoId = accesoVehicularRepository.findMaxId();
+            int nuevoId = (ultimoId != null) ? ultimoId + 1 : 1;
+            obj.setIdAccesoVehicular(nuevoId); // Establecer el nuevo ID
+
 
             // Validar Cliente
             Optional<Cliente> optionalCliente = clienteServiceImpl.findById(obj.getCliente().getIdCliente());
@@ -180,6 +187,43 @@ public class AccesoVehicularController {
         return ResponseEntity.ok(lista);
     }
 
+
+
+    @PostMapping("/registrarCliente")
+    @ResponseBody
+    public ResponseEntity<?> registrarCliente(@RequestBody Cliente cliente) {
+        HashMap<String, Object> salida = new HashMap<>();
+
+        try {
+            // Buscar si el cliente ya existe basado en su identificador (DNI o ID similar)
+            Optional<Cliente> clienteExistente = clienteServiceImpl.findById(cliente.getIdCliente());
+
+            if (clienteExistente.isPresent()) {
+                // Si el cliente existe, se actualizan los datos
+                Cliente clienteActualizado = clienteExistente.get();
+                clienteActualizado.setNombres(cliente.getNombres());
+                clienteActualizado.setApellidos(cliente.getApellidos());
+                clienteActualizado.setTelefono(cliente.getTelefono());
+                // Agrega otros campos a actualizar aquí
+                clienteServiceImpl.registraCliente(clienteActualizado); // Guardar actualización
+                salida.put("mensaje", "Cliente actualizado exitosamente.");
+                salida.put("cliente", clienteActualizado);
+                return ResponseEntity.ok(salida);
+            } else {
+                // Si el cliente no existe, se registra uno nuevo
+                cliente.setNumIncidencias(0); // Inicializar el número de incidencias a 0
+                Cliente nuevoCliente = clienteServiceImpl.registraCliente(cliente); // Guardar nuevo cliente
+                salida.put("mensaje", "Cliente registrado exitosamente.");
+                salida.put("cliente", nuevoCliente);
+                return ResponseEntity.ok(salida);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            salida.put("error", "Ocurrió un error al registrar o actualizar el cliente: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(salida);
+        }
+    }
 
 
 
