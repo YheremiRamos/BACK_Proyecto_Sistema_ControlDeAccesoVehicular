@@ -15,5 +15,8 @@ public interface ClienteService {
     public abstract List<Cliente> buscaClientePorDni(String dni);
 
 	List<Cliente> ListarTodosClientes();
+	
+	public abstract List<Cliente> listaCompleja(String nombres, String apellidos, String identificador);
+
 
 }
