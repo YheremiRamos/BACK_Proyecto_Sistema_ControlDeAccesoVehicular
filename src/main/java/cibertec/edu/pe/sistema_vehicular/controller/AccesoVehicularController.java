@@ -188,7 +188,7 @@ public class AccesoVehicularController {
     }
 
 
-
+/*
     @PostMapping("/registrarCliente")
     @ResponseBody
     public ResponseEntity<?> registrarCliente(@RequestBody Cliente cliente) {
@@ -224,7 +224,7 @@ public class AccesoVehicularController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(salida);
         }
     }
-
+*/
 
 
 

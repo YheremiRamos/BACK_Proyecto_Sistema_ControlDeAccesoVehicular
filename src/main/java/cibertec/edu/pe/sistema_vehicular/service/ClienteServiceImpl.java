@@ -38,5 +38,20 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteRepository.traerClientePorDni(identificador);
     }
 
+    @Override
+    public List<Cliente> ListarTodosClientes() {
+        return clienteRepository.findAll();
+
+    }
+
+    @Override
+    public List<Cliente> listaCompleja(String nombres, String apellidos, String identificador) {
+
+        return	clienteRepository.listaConsultaCompleja(nombres, apellidos, identificador);
+    }
+
+
+
+
 
 }
