@@ -17,14 +17,13 @@ public interface AccesoVehicularRepository extends JpaRepository<Acceso_Vehicula
     SELECT
         av.idAccesoVehicular,
         CONCAT(c.nombres, ' ', c.apellidos) AS nombreCompleto,
-        p.tipoVehiculoPermitido,
         av.placaVehiculo,
         av.fechaRegistro,
         av.fechaActualizacion,
         c.numIncidencias
     FROM acceso_vehicular av
              JOIN cliente c ON av.idCliente = c.idCliente
-             JOIN parqueo p ON av.idParqueo = p.idParqueo
+             JOIN parqueos p ON av.idParqueos = p.idParqueos
 """, nativeQuery = true)
     List<Object[]> listarAccesoVehicularConDetalles();
 

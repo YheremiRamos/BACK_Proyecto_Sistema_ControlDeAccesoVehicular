@@ -2,6 +2,8 @@ package cibertec.edu.pe.sistema_vehicular.entity;
 
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +18,7 @@ public class Parqueos {
     
     @ManyToOne
     @JoinColumn(name = "idUbicacion", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Ubicacion ubicacion; // Relación con la tabla "ubicacion"
     
     @ManyToOne

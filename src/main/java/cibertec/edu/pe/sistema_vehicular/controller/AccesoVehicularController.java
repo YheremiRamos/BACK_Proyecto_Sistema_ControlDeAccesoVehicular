@@ -27,14 +27,17 @@ public class AccesoVehicularController {
     private AccesoVehicularService accesoVehicularService;
 
     @Autowired
-    private EspacioParqueoServiceImpl espacioParqueoServiceImpl;
+    private UbicacionServiceImpl ubicacionServiceImpl;
+    @Autowired
+    private UbicacionService ubicacionService;
 
     @Autowired
     private ClienteServiceImpl clienteServiceImpl;
 
     @Autowired
-    private ParqueoServiceImpl parqueoServiceImpl;
-
+    private ParqueosServiceImpl parqueosServiceImpl;
+    @Autowired
+    private ParqueosService parqueosService;
     @Autowired
     private UsuarioServiceImpl usuarioServiceImpl;
 
@@ -55,7 +58,7 @@ public class AccesoVehicularController {
 
             // Asignar valores por defecto
             obj.setEstado(AppSettings.ACTIVO_DESC);
-            obj.getEspacio().setEstado(AppSettings.INACTIVO_DESCRIPCION);
+           
             obj.setFechaRegistro(new Date());
 
             // Obtener el último ID
@@ -64,7 +67,11 @@ public class AccesoVehicularController {
             obj.setIdAccesoVehicular(nuevoId); // Establecer el nuevo ID
 
 
-            // Validar Cliente
+         // Validar Cliente
+            if (obj.getCliente() == null || obj.getCliente().getIdCliente() == null) {
+                salida.put("error", "Cliente no proporcionado o inválido");
+                return ResponseEntity.badRequest().body(salida);
+            }
             Optional<Cliente> optionalCliente = clienteServiceImpl.findById(obj.getCliente().getIdCliente());
             if (!optionalCliente.isPresent()) {
                 salida.put("error", "Cliente no encontrado");
@@ -72,21 +79,33 @@ public class AccesoVehicularController {
             }
             obj.setCliente(optionalCliente.get());
 
-            // Validar Parqueo
-            Optional<Parqueo> optionalParqueo = parqueoServiceImpl.findById(obj.getParqueo().getIdParqueo());
-            if (!optionalParqueo.isPresent()) {
+            
+         // Validar Ubicacion
+            Optional<Ubicacion> optionalUbicacion = ubicacionServiceImpl.findById(obj.getUbicacion().getIdUbicacion());
+            if (optionalUbicacion.isEmpty()) {
+                salida.put("error", "Ubicación no encontrada");
+                return ResponseEntity.badRequest().body(salida);
+            }
+
+            // Si la ubicación existe, la asignamos
+            obj.setUbicacion(optionalUbicacion.get());
+
+         // Validar si el objeto Parqueos está presente en el objeto Acceso_Vehicular
+            if (obj.getParqueos() == null) {
+                salida.put("error", "El parqueo no está asignado");
+                return ResponseEntity.badRequest().body(salida);
+            }
+
+            // Ahora buscar el parqueo por su ID
+            Optional<Parqueos> optionalParqueos = parqueosServiceImpl.findById(obj.getParqueos().getIdParqueos());
+            if (!optionalParqueos.isPresent()) {
                 salida.put("error", "Parqueo no encontrado");
                 return ResponseEntity.badRequest().body(salida);
             }
-            obj.setParqueo(optionalParqueo.get());
 
-            // Validar Espacio de Parqueo
-            Optional<EspacioParqueo> optionalEspacio = espacioParqueoServiceImpl.findById(obj.getEspacio().getIdEspacio());
-            if (!optionalEspacio.isPresent()) {
-                salida.put("error", "Espacio de parqueo no encontrado");
-                return ResponseEntity.badRequest().body(salida);
-            }
-            obj.setEspacio(optionalEspacio.get());
+            // Asignar el parqueo al objeto Acceso_Vehicular
+            obj.setParqueos(optionalParqueos.get());
+
 
             // Validar Usuario
             Optional<Usuario> optionalUsuario = usuarioServiceImpl.findById(obj.getUsuario().getIdUsuario());
@@ -154,25 +173,27 @@ public class AccesoVehicularController {
         }
     }
 
-    @GetMapping("/parqueo/id/{nombre}")
+    //buscar por nombre de ubicacion
+    @GetMapping("/ubicacion/idUbicacion/{nombreUbicacion}")
     @ResponseBody
-    public ResponseEntity<?> obtenerIdParqueo(@PathVariable String nombre) {
-        Optional<Parqueo> parqueo = parqueoServiceImpl.findByTipoVechiculoPermitido(nombre); // Asume que tienes el método findByNombre
-        if (parqueo.isPresent()) {
-            return ResponseEntity.ok(parqueo.get().getIdParqueo());
+    public ResponseEntity<?> obtenerIdUbicacion(@PathVariable String nombreUbicacion) {
+        Optional<Ubicacion> ubicacion = ubicacionServiceImpl.findByNombreUbicacion(nombreUbicacion); // Asume que tienes el método findByNombre
+        if (ubicacion.isPresent()) {
+            return ResponseEntity.ok(ubicacion.get().getIdUbicacion());
         } else {
             HashMap<String, Object> salida = new HashMap<>();
-            salida.put("error", "Parqueo no encontrado");
+            salida.put("error", "Ubicacion no encontrada");
             return ResponseEntity.badRequest().body(salida);
         }
     }
 
-    @GetMapping("/espacio/id/{numeroEspacio}")
+    // Busca por ID de parqueo
+    @GetMapping("/parqueos/id/{idParqueos}")
     @ResponseBody
-    public ResponseEntity<?> obtenerIdEspacio(@PathVariable Integer numeroEspacio) {
-        Optional<EspacioParqueo> espacio = espacioParqueoServiceImpl.findByNumeroEspacio(numeroEspacio); // Asume que tienes el método findByNumeroEspacio
-        if (espacio.isPresent()) {
-            return ResponseEntity.ok(espacio.get().getIdEspacio());
+    public ResponseEntity<?> obtenerIdParqueos(@PathVariable Integer idParqueos) {
+        Optional<Parqueos> parqueos = parqueosServiceImpl.findById(idParqueos); // Usa el servicio inyectado
+        if (parqueos.isPresent()) {
+            return ResponseEntity.ok(parqueos.get().getIdParqueos());
         } else {
             HashMap<String, Object> salida = new HashMap<>();
             salida.put("error", "Espacio de parqueo no encontrado");
