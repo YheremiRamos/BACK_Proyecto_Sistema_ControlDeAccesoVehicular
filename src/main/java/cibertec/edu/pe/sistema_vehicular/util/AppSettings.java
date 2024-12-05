@@ -1,5 +1,7 @@
 package cibertec.edu.pe.sistema_vehicular.util;
 
+import cibertec.edu.pe.sistema_vehicular.entity.EstadoEspacios;
+
 public class AppSettings {
 
 
@@ -42,5 +44,7 @@ public class AppSettings {
     public static final String MENSAJE_ELI_NO_EXISTE_ID = "No existe el ID que se desea eliminar.";
 
     public static final String MENSAJE_DNI_YA_EXISTE = "Ya existe dicho el DNI : ";
+
+
 
 }

@@ -1,6 +1,8 @@
 package cibertec.edu.pe.sistema_vehicular.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import cibertec.edu.pe.sistema_vehicular.entity.Parqueos;
 
 
@@ -10,6 +12,7 @@ public interface ParqueosService {
     List<Parqueos> listarTodos();
 
     // Buscar parqueo por ID
+    Optional<Parqueos> findById(int idParqueos);
     Parqueos buscarPorId(int idParqueos);
 
     // Registrar un nuevo parqueo
@@ -25,13 +28,18 @@ public interface ParqueosService {
     List<Parqueos> listarPorEstado(String estado_espacios);
 
     // Listar parqueos por tipo
-    List<Parqueos> listarPorTipo(String tipo_parqueo);
+    List<Parqueos> listarPorTipo(String tipoParqueo);
 
     /*
     List<Parqueos> listarParqueosPorUbicacionYEstado(int idUbicacion, String estado);*/
 
-    /*--------------------LISTADO Y AGRUPACION DE PARQUEOS EN UBICACIONES------------------*/
- 
+    /*--------------------FILTRACION COMPLEJA------------------*/
+    List<Parqueos> listaCompleja(int idTipoVehiculo, int idEstadoEspacio, int idTipoParqueo);
+    
+    /*VALIDACION LIMITES
+    int countByUbicacion_IdUbicacion(int idUbicacion);
+
+	*/
 
     
 }

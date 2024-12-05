@@ -3,7 +3,7 @@ package cibertec.edu.pe.sistema_vehicular.controller;
 import java.util.List;
 
 import cibertec.edu.pe.sistema_vehicular.entity.Cliente;
-import cibertec.edu.pe.sistema_vehicular.entity.EspacioParqueo;
+
 import cibertec.edu.pe.sistema_vehicular.entity.TipoUsuario;
 import cibertec.edu.pe.sistema_vehicular.service.ClienteService;
 import cibertec.edu.pe.sistema_vehicular.service.TipoUsuarioService;

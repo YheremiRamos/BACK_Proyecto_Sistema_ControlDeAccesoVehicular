@@ -1,7 +1,7 @@
 package cibertec.edu.pe.sistema_vehicular.service;
 
 import cibertec.edu.pe.sistema_vehicular.entity.Cliente;
-import cibertec.edu.pe.sistema_vehicular.entity.EspacioParqueo;
+
 import cibertec.edu.pe.sistema_vehicular.entity.TipoUsuario;
 import cibertec.edu.pe.sistema_vehicular.entity.Usuario;
 
