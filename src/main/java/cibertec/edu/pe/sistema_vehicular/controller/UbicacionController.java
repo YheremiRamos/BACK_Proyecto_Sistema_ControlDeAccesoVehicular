@@ -42,8 +42,7 @@ public class UbicacionController {
     @PostMapping("/registraUbicacion")
     public ResponseEntity<Map<String, Object>> registrarUbicacion(@RequestBody Ubicacion ubicacion) {
         Map<String, Object> response = new HashMap<>();
-        
-       
+ 
         try {
         	 //VALIDACION
         	 List<Ubicacion> lstUbicacions = ubicacionService.listaPorNombreIgualRegistra(ubicacion.getNombreUbicacion());

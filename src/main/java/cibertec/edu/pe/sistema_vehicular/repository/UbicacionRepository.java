@@ -30,6 +30,7 @@ public interface UbicacionRepository extends JpaRepository<Ubicacion, Integer> {
   //actualizar //validacion de repetción 
   	@Query("select u from Ubicacion u where u.nombreUbicacion = ?1 and u.idUbicacion != ?2") 
   	List<Ubicacion> listaPorNombreIgualActualiza(String nombreUbicacion, int idUbicacion);
+
   	//--
  // Buscar ubicaciones por nombre exacto
     Optional<Ubicacion> findByNombreUbicacion(String nombreUbicacion);
@@ -53,4 +54,5 @@ public interface UbicacionRepository extends JpaRepository<Ubicacion, Integer> {
     // Contar ubicaciones por tipo de ubicación (comentado temporalmente)
     /*@Query("SELECT COUNT(u) FROM Ubicacion u WHERE u.tipoUbicacion.idTipoUbicacion = :tipoId")
     long countByTipoUbicacion(@Param("tipoId") Integer tipoId);*/
+
 }

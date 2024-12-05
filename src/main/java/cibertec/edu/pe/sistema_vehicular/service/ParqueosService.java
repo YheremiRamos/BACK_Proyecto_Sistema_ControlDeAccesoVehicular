@@ -12,7 +12,10 @@ public interface ParqueosService {
     List<Parqueos> listarTodos();
 
     // Buscar parqueo por ID
+
     Optional<Parqueos> findById(int idParqueos);
+
+
     Parqueos buscarPorId(int idParqueos);
 
     // Registrar un nuevo parqueo
@@ -34,12 +37,14 @@ public interface ParqueosService {
     List<Parqueos> listarParqueosPorUbicacionYEstado(int idUbicacion, String estado);*/
 
     /*--------------------FILTRACION COMPLEJA------------------*/
+
     List<Parqueos> listaCompleja(int idTipoVehiculo, int idEstadoEspacio, int idTipoParqueo);
     
     /*VALIDACION LIMITES
     int countByUbicacion_IdUbicacion(int idUbicacion);
 
 	*/
+
 
     
 }

@@ -13,8 +13,12 @@ public interface ParqueosRepository extends JpaRepository<Parqueos, Integer> {
 
     // Listar todos los parqueos ordenados por ID
     List<Parqueos> findByOrderByIdParqueos();
+
     // Método para encontrar parqueo por ID
     Optional<Parqueos> findById(int idParqueos);
+
+
+
     // Buscar por ID de parqueo
     List<Parqueos> findByIdParqueos(int idParqueos);
 
@@ -44,11 +48,16 @@ public interface ParqueosRepository extends JpaRepository<Parqueos, Integer> {
     	    + " (?2 = -1 OR p.estadoEspacios.idEstadoEspacios = ?2) AND"
     	    + " (?3 = -1 OR p.tipoParqueo.idTipoParqueo = ?3)")
     	List<Parqueos> listaConsultaCompleja(int idTipoVehiculo, int idEstadoEspacio, int idTipoParqueo);
+
     
    /* @Query("SELECT COUNT(p) FROM Parqueo p WHERE p.ubicacion.idUbicacion = :idUbicacion")
     long countByUbicacion_IdUbicacion(@Param("idUbicacion") int idUbicacion);
 
 */
+
+
+
+
 
 
 

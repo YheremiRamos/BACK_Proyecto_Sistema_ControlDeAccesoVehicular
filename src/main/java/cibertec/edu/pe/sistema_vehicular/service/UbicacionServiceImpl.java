@@ -54,13 +54,12 @@ public class UbicacionServiceImpl implements UbicacionService {
 	public List<Ubicacion> listaPorNombreIgualActualiza(String nombreUbicacion, int idUbicacion) {
 		return ubicacionRepository.listaPorNombreIgualActualiza(nombreUbicacion, idUbicacion);
 	}
+
 	@Override
 	public Optional<Ubicacion> findByNombreUbicacion(String nombreUbicacion) {
 		return ubicacionRepository.findByNombreUbicacion(nombreUbicacion);
 	}
 
-	
-	
 	
 
 	/*@Override

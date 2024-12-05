@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cibertec.edu.pe.sistema_vehicular.entity.Parqueos;
-
+import cibertec.edu.pe.sistema_vehicular.entity.Ubicacion;
 import cibertec.edu.pe.sistema_vehicular.repository.ParqueosRepository;
 
 @Service
@@ -18,6 +18,7 @@ public class ParqueosServiceImpl implements ParqueosService {
 
 	@Override
 	public List<Parqueos> listarTodos() {
+
 		return repository.findByOrderByIdParqueos();
 	}
 
@@ -25,6 +26,8 @@ public class ParqueosServiceImpl implements ParqueosService {
 	@Override
 	public Optional<Parqueos> findById(int idParqueos) {
 		return repository.findById(idParqueos); // Devuelve el Optional directamente
+
+
 	}
 
 	@Override
@@ -66,7 +69,10 @@ public class ParqueosServiceImpl implements ParqueosService {
 
 	@Override
 	public void eliminarParqueo(int idParqueos) {
+
 		repository.deleteById(idParqueos);
+
+
 	}
 
 	@Override
@@ -79,11 +85,14 @@ public class ParqueosServiceImpl implements ParqueosService {
 
 	@Override
 	public List<Parqueos> listarPorTipo(String tipoParqueo) {
+
 		Integer idTipoParqueo = Integer.valueOf(tipoParqueo); // Convertir tipo a Integer si es necesario
 		return repository.findByTipo(idTipoParqueo);
 	}
 
+
 	/*--------------------FILTRACIO COMPLEJA------------------*/
+
 
 	@Override
 	public List<Parqueos> listaCompleja(int idTipoVehiculo, int idEstadoEspacio, int idTipoParqueo) {
@@ -96,5 +105,6 @@ public class ParqueosServiceImpl implements ParqueosService {
 	        System.out.println("Cantidad de parqueos en la ubicación " + idUbicacion + ": " + count);
 	        return (int) count; // Convertir long a int
 	    }*/
+
 
 }
