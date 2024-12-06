@@ -79,17 +79,6 @@ public class AccesoVehicularController {
             }
             obj.setCliente(optionalCliente.get());
 
-            
-         // Validar Ubicacion
-            Optional<Ubicacion> optionalUbicacion = ubicacionServiceImpl.findById(obj.getUbicacion().getIdUbicacion());
-            if (optionalUbicacion.isEmpty()) {
-                salida.put("error", "Ubicación no encontrada");
-                return ResponseEntity.badRequest().body(salida);
-            }
-
-            // Si la ubicación existe, la asignamos
-            obj.setUbicacion(optionalUbicacion.get());
-
          // Validar si el objeto Parqueos está presente en el objeto Acceso_Vehicular
             if (obj.getParqueos() == null) {
                 salida.put("error", "El parqueo no está asignado");
