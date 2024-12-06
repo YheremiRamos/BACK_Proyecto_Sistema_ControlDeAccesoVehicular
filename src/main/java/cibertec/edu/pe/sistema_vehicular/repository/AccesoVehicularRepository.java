@@ -43,4 +43,8 @@ public interface AccesoVehicularRepository extends JpaRepository<Acceso_Vehicula
     @Query(value = "CALL REGISTRAR_SALIDA(:idAccesoVehicular)", nativeQuery = true)
     void ejecutarRegistrarSalida(@Param("idAccesoVehicular") Integer idAccesoVehicular);
 
+ // Método para listar los accesos filtrados por el id del parqueo
+    @Query("SELECT a FROM Acceso_Vehicular a WHERE a.parqueos.idParqueos = :idParqueos")
+    List<Acceso_Vehicular> findByParqueoId(@Param("idParqueos") Integer idParqueos);
+
 }

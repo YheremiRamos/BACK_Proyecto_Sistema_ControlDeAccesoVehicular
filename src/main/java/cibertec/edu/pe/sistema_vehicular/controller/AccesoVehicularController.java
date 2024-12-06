@@ -103,6 +103,14 @@ public class AccesoVehicularController {
                 return ResponseEntity.badRequest().body(salida);
             }
 
+            Parqueos parqueo = optionalParqueos.get();
+//------------------------------
+            // Cambiar el estado del parqueo a "No disponible"
+            EstadoEspacios estadoNoDisponible = new EstadoEspacios();
+            estadoNoDisponible.setIdEstadoEspacios(4);  // Asumiendo que el ID para "No disponible" es 4
+            parqueo.setEstadoEspacios(estadoNoDisponible);
+            parqueosServiceImpl.registrarParqueo(parqueo); // Guardar el parqueo con el nuevo estado
+            //---------------------------------
             // Asignar el parqueo al objeto Acceso_Vehicular
             obj.setParqueos(optionalParqueos.get());
 
@@ -148,7 +156,7 @@ public class AccesoVehicularController {
     }
 
 
-    @PostMapping("/registrarSalida/{idAccesoVehicular}")
+   /* @PostMapping("/registrarSalida/{idAccesoVehicular}")
     @ResponseBody
     public ResponseEntity<?> registraSalida(@PathVariable Integer idAccesoVehicular ){
 
@@ -157,6 +165,46 @@ public class AccesoVehicularController {
             return ResponseEntity.ok("Salida registrada correctamente.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al registrar Salida: " + e.getMessage());
+        }
+    }*/
+    @PostMapping("/registrarSalida/{idAccesoVehicular}")
+    @ResponseBody
+    public ResponseEntity<?> registraSalida(@PathVariable Integer idAccesoVehicular) {
+        HashMap<String, Object> salida = new HashMap<>();
+        try {
+            // Recuperar el acceso vehicular por ID
+            Optional<Acceso_Vehicular> accesoVehicularOpt = accesoVehicularRepository.findById(idAccesoVehicular);
+            if (accesoVehicularOpt.isEmpty()) {
+                salida.put("error", "Acceso vehicular no encontrado");
+                return ResponseEntity.badRequest().body(salida);
+            }
+
+            Acceso_Vehicular accesoVehicular = accesoVehicularOpt.get();
+            
+            // Obtener el parqueo asociado
+            Parqueos parqueo = accesoVehicular.getParqueos();
+            if (parqueo == null) {
+                salida.put("error", "Parqueo no asignado en el acceso vehicular");
+                return ResponseEntity.badRequest().body(salida);
+            }
+
+            // Cambiar el estado del parqueo a "Disponible" (suponiendo que el ID para "Disponible" es 3)
+            EstadoEspacios estadoDisponible = new EstadoEspacios();
+            estadoDisponible.setIdEstadoEspacios(3);  // Asumiendo que el ID para "Disponible" es 3
+            parqueo.setEstadoEspacios(estadoDisponible);
+
+            // Guardar el parqueo con el nuevo estado
+            parqueosServiceImpl.registrarParqueo(parqueo);
+
+            // Registrar la salida del acceso vehicular
+            accesoVehicular.setEstado(AppSettings.INACTIVO_DESC);  // Cambiar el estado de acceso vehicular, si es necesario
+            accesoVehicularService.registraAccesoVehicular(accesoVehicular);
+
+            salida.put("mensaje", "Salida registrada correctamente.");
+            return ResponseEntity.ok(salida);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al registrar la salida: " + e.getMessage());
         }
     }
 
@@ -208,6 +256,13 @@ public class AccesoVehicularController {
         return ResponseEntity.ok(lista);
     }
 
+    //ASIGANCION DE AV A PARQUEO
+    @GetMapping("/filtrarPorParqueo/{idParqueos}")
+    @ResponseBody
+    public ResponseEntity<List<Acceso_Vehicular>> filtrarPorParqueo(@PathVariable Integer idParqueos) {
+        List<Acceso_Vehicular> accesos = accesoVehicularService.findByParqueoId(idParqueos);
+        return ResponseEntity.ok(accesos);
+    }
 
 /*
     @PostMapping("/registrarCliente")
