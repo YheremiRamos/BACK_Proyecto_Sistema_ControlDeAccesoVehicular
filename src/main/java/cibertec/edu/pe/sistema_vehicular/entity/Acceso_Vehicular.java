@@ -26,10 +26,6 @@ public class Acceso_Vehicular {
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
 
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUbicacion")
-    private Ubicacion ubicacion;
     
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @ManyToOne(fetch = FetchType.LAZY)
