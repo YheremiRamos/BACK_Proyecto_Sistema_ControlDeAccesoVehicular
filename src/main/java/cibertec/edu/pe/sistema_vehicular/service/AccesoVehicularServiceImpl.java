@@ -33,4 +33,11 @@ public class AccesoVehicularServiceImpl implements  AccesoVehicularService{
         repository.ejecutarRegistrarSalida(idAccesoVehicular);
     }
 
+	@Override
+	public List<Acceso_Vehicular> findByParqueoId(Integer idParqueos) {
+		 return repository.findByParqueoId(idParqueos);
+	}
+
+	
+
 }
