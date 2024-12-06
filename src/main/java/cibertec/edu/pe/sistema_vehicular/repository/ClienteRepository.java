@@ -30,7 +30,8 @@ public interface ClienteRepository extends JpaRepository<Cliente,Integer> {
 	    + " a.apellidos like ?2) and "
 	    + " a.identificador like ?3 ")
 	public abstract List<Cliente> listaConsultaCompleja(String nombres, String apellidos, String identificador);
-//listo
+
+	public abstract Optional<Cliente> findByIdCliente(Integer idCliente);
 
 
 }

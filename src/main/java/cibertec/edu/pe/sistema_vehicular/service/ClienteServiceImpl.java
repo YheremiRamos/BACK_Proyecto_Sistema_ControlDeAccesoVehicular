@@ -50,6 +50,11 @@ public class ClienteServiceImpl implements ClienteService {
         return	clienteRepository.listaConsultaCompleja(nombres, apellidos, identificador);
     }
 
+	@Override
+	public Optional<Cliente> buscaClienteId(int idCliente) {
+		return clienteRepository.findByIdCliente(idCliente);
+	}
+
 
 
 

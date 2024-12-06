@@ -20,13 +20,8 @@ public class Cliente {
     private String telefono;
     private int numIncidencias;
     
-    // Getters y Setters
-    public Integer getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public String getNombreApellido() {
+    	return nombres + " " + apellidos;
     }
 
 }

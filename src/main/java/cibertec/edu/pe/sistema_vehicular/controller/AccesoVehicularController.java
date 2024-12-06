@@ -68,7 +68,7 @@ public class AccesoVehicularController {
 
 
          // Validar Cliente
-            if (obj.getCliente() == null || obj.getCliente().getIdCliente() == null) {
+            if (obj.getCliente() == null || obj.getCliente().getIdCliente() == 0) {
                 salida.put("error", "Cliente no proporcionado o inválido");
                 return ResponseEntity.badRequest().body(salida);
             }

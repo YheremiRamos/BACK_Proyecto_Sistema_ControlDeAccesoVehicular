@@ -30,6 +30,7 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -107,12 +108,15 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
 <dependency>
     <groupId>net.sf.jasperreports</groupId>
     <artifactId>jasperreports</artifactId>
     <version>7.0.1</version>
 </dependency>
+
+   
     </dependencies>
 
     <build>
