@@ -15,11 +15,20 @@ public class Parqueos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idParqueos;
-    
+
+
+
+
+
     @ManyToOne
     @JoinColumn(name = "idUbicacion", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Ubicacion ubicacion; // Relación con la tabla "ubicacion"
+
+
+
+
+
     
     @ManyToOne
     @JoinColumn(name = "idTipoParqueo", nullable = false)
