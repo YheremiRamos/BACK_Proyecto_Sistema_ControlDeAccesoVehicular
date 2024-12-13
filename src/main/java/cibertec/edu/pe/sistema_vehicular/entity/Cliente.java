@@ -20,7 +20,9 @@ public class Cliente {
     private String telefono;
     private int numIncidencias;
     
-    public String getNombreApellido() {
+    
+    
+    public String getReporteNombreApellido() {
     	return nombres + " " + apellidos;
     }
 

@@ -26,10 +26,12 @@ public interface ClienteRepository extends JpaRepository<Cliente,Integer> {
     //================================PC3- CONSULTA COMPLEJA================================
 	// Cambiar la consulta para usar los parámetros con '%' ya incluidos
 	@Query("select a from Cliente a where"
-	    + " (a.nombres like ?1 and"
-	    + " a.apellidos like ?2) and "
+	    + " a.nombres like ?1 and"
+	    + " a.apellidos like ?2 and"
 	    + " a.identificador like ?3 ")
 	public abstract List<Cliente> listaConsultaCompleja(String nombres, String apellidos, String identificador);
+	
+	
 
 	public abstract Optional<Cliente> findByIdCliente(Integer idCliente);
 

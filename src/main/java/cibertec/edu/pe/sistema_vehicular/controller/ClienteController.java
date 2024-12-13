@@ -53,14 +53,13 @@ public class ClienteController {
 	    @GetMapping("/consultaClientePorParametros") //http://localhost:8090/url/consultaAutor/consultaAutorPorParametros?nombres=&apellidos&fecNacDesde=1900-01-01&fecNacHasta=2020-01-01&telefono=&celular=&orcid=&estado=1&idPais=-1&idGrado=-1
 
 		 public ResponseEntity<?> consultaClientePorParametros(
-		            @RequestParam(name = "nombres", required = true, defaultValue = "") String nombres,
-		            @RequestParam(name = "apellidos", required = true, defaultValue = "") String apellidos,
-		            @RequestParam(name = "identificador", required = true, defaultValue = "") String identificador)
+		            @RequestParam(name = "nombres", required=true, defaultValue = "") String nombres,
+		            @RequestParam(name = "apellidos", required=true, defaultValue = "") String apellidos,
+		            @RequestParam(name = "identificador", required=true, defaultValue = "") String identificador)
 		           {
 
 		        List<Cliente> lstSalida = clienteService.listaCompleja(
-		        		"%"+ nombres+"%", "%"+apellidos+"%", "%" +identificador + "%");
-
+		        		"%"+nombres+"%", "%"+apellidos+"%", "%"+identificador+"%");
 		        return ResponseEntity.ok(lstSalida);
 		    }
 
@@ -93,12 +92,16 @@ public class ClienteController {
 				
 				// PASO 2 Diseño de reporte
 				String fileReporte = request.getServletContext().getRealPath("/informe.jasper");
-
+				FileInputStream stream = new FileInputStream(new File(fileReporte));
+				
 				// PASO3 parámetros adicionales
-				Map<String, Object> params = new HashMap<String, Object>();
+				String fileLogo = request.getServletContext().getRealPath("/logo.jpg");
+		        Map<String, Object> params = new HashMap<>();
+		        params.put("RUTA_LOGO", fileLogo);
 
-				JasperReport jasperReport = (JasperReport) JRLoader.loadObject(new FileInputStream(new File(fileReporte)));
+				JasperReport jasperReport = (JasperReport) JRLoader.loadObject(stream);
 				JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
+
 
 				// PASO 5 parametros en el Header del mensajes HTTP
 				response.setContentType("application/pdf");
