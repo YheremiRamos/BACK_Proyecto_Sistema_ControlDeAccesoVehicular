@@ -31,7 +31,13 @@ public class Acceso_Vehicular {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idParqueos")
     private Parqueos parqueos;
-    
+
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUbicacion")
+    private Ubicacion ubicacion;
+
+
     private String placaVehiculo;
     private String estado;
 

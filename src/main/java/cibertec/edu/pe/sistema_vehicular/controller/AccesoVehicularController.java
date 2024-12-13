@@ -54,20 +54,16 @@ public class AccesoVehicularController {
         HashMap<String, Object> salida = new HashMap<>();
 
         try {
-
-
             // Asignar valores por defecto
             obj.setEstado(AppSettings.ACTIVO_DESC);
-           
             obj.setFechaRegistro(new Date());
 
             // Obtener el último ID
             Integer ultimoId = accesoVehicularRepository.findMaxId();
             int nuevoId = (ultimoId != null) ? ultimoId + 1 : 1;
-            obj.setIdAccesoVehicular(nuevoId); // Establecer el nuevo ID
+            obj.setIdAccesoVehicular(nuevoId);
 
-
-         // Validar Cliente
+            // Validar Cliente
             if (obj.getCliente() == null || obj.getCliente().getIdCliente() == 0) {
                 salida.put("error", "Cliente no proporcionado o inválido");
                 return ResponseEntity.badRequest().body(salida);
@@ -79,13 +75,11 @@ public class AccesoVehicularController {
             }
             obj.setCliente(optionalCliente.get());
 
-         // Validar si el objeto Parqueos está presente en el objeto Acceso_Vehicular
+            // Validar Parqueos
             if (obj.getParqueos() == null) {
                 salida.put("error", "El parqueo no está asignado");
                 return ResponseEntity.badRequest().body(salida);
             }
-
-            // Ahora buscar el parqueo por su ID
             Optional<Parqueos> optionalParqueos = parqueosServiceImpl.findById(obj.getParqueos().getIdParqueos());
             if (!optionalParqueos.isPresent()) {
                 salida.put("error", "Parqueo no encontrado");
@@ -93,24 +87,38 @@ public class AccesoVehicularController {
             }
 
             Parqueos parqueo = optionalParqueos.get();
-//------------------------------
+
             // Cambiar el estado del parqueo a "No disponible"
             EstadoEspacios estadoNoDisponible = new EstadoEspacios();
             estadoNoDisponible.setIdEstadoEspacios(4);  // Asumiendo que el ID para "No disponible" es 4
             parqueo.setEstadoEspacios(estadoNoDisponible);
             parqueosServiceImpl.registrarParqueo(parqueo); // Guardar el parqueo con el nuevo estado
-            //---------------------------------
-            // Asignar el parqueo al objeto Acceso_Vehicular
-            obj.setParqueos(optionalParqueos.get());
 
+            obj.setParqueos(parqueo); // Asignar el parqueo al objeto Acceso_Vehicular
 
             // Validar Usuario
+            if (obj.getUsuario() == null || obj.getUsuario().getIdUsuario() == 0) {
+                salida.put("error", "Usuario no proporcionado o inválido");
+                return ResponseEntity.badRequest().body(salida);
+            }
             Optional<Usuario> optionalUsuario = usuarioServiceImpl.findById(obj.getUsuario().getIdUsuario());
             if (!optionalUsuario.isPresent()) {
                 salida.put("error", "Usuario no encontrado");
                 return ResponseEntity.badRequest().body(salida);
             }
             obj.setUsuario(optionalUsuario.get());
+
+            // Validar Ubicacion
+            if (obj.getUbicacion() == null || obj.getUbicacion().getIdUbicacion() == 0) {
+                salida.put("error", "Ubicación no proporcionada o inválida");
+                return ResponseEntity.badRequest().body(salida);
+            }
+            Optional<Ubicacion> optionalUbicacion = ubicacionServiceImpl.findById(obj.getUbicacion().getIdUbicacion());
+            if (!optionalUbicacion.isPresent()) {
+                salida.put("error", "Ubicación no encontrada");
+                return ResponseEntity.badRequest().body(salida);
+            }
+            obj.setUbicacion(optionalUbicacion.get());
 
             // Guardar el registro de acceso vehicular
             Acceso_Vehicular objAV = accesoVehicularService.registraAccesoVehicular(obj);
@@ -131,6 +139,7 @@ public class AccesoVehicularController {
 
         return ResponseEntity.ok(salida);
     }
+
 
     @PostMapping("/registrarIncidencia/{idCliente}")
     @ResponseBody
@@ -253,15 +262,14 @@ public class AccesoVehicularController {
         return ResponseEntity.ok(accesos);
     }
 
-/*
     @PostMapping("/registrarCliente")
     @ResponseBody
     public ResponseEntity<?> registrarCliente(@RequestBody Cliente cliente) {
         HashMap<String, Object> salida = new HashMap<>();
 
         try {
-            // Buscar si el cliente ya existe basado en su identificador (DNI o ID similar)
-            Optional<Cliente> clienteExistente = clienteServiceImpl.findById(cliente.getIdCliente());
+            // Buscar si el cliente ya existe basado en su DNI
+            Optional<Cliente> clienteExistente = clienteServiceImpl.findByDni(cliente.getIdentificador());
 
             if (clienteExistente.isPresent()) {
                 // Si el cliente existe, se actualizan los datos
@@ -289,7 +297,8 @@ public class AccesoVehicularController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(salida);
         }
     }
-*/
+
+
 
 
 
